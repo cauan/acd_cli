@@ -261,9 +261,9 @@ def upload_file(path: str, parent_id: str, overwr: bool, force: bool, dedup: boo
     if dedup and query.file_size_exists(os.path.getsize(path)):
         nodes = query.find_md5(hashing.hash_file(path))
         nodes = [n for n in format.PathFormatter(nodes)]
-        if len(nodes) > 0:
+        for node in nodes:
             # print('Skipping upload of duplicate file "%s".' % short_nm)
-            logger.info('Location of duplicates: %s' % nodes)
+            logger.info('Location of duplicates: %s' % node)
             pg_handler.done()
             return DUPLICATE
 
